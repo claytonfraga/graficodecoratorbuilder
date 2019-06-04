@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -14,14 +11,18 @@ import javax.swing.JPanel;
  *
  * @author Thiago
  */
-public class MainView extends javax.swing.JFrame {
+public final class MainView extends javax.swing.JFrame {
 
     /**
      * Creates new form mainView
      */
     public MainView() {
         initComponents();
-        this.setLocationRelativeTo(this.getParent());
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2.8);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
+        this.pack();
     }
 
     /**
@@ -45,6 +46,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnRestaurarPadrao = new javax.swing.JButton();
         btnDesfazer = new javax.swing.JButton();
+        rotulosTotalPercentual = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -62,6 +64,11 @@ public class MainView extends javax.swing.JFrame {
         rotulosProporcional.setText("Rótulo de Dados (%)");
 
         rotulosTotal.setText("Rótulo de Dados - Valor");
+        rotulosTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotulosTotalActionPerformed(evt);
+            }
+        });
 
         corBarrasGrupo.setText("Cor das Barras - Por grupo");
 
@@ -74,6 +81,8 @@ public class MainView extends javax.swing.JFrame {
         btnRestaurarPadrao.setText("Restaurar Padrão");
 
         btnDesfazer.setText("Desfazer");
+
+        rotulosTotalPercentual.setText("Rótulo de Dados - Valor (%)");
 
         javax.swing.GroupLayout decoratorsPanelLayout = new javax.swing.GroupLayout(decoratorsPanel);
         decoratorsPanel.setLayout(decoratorsPanelLayout);
@@ -93,14 +102,16 @@ public class MainView extends javax.swing.JFrame {
                             .addComponent(grade))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(decoratorsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(17, 17, 17)
-                        .addComponent(comboBoxTipoBarra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(decoratorsPanelLayout.createSequentialGroup()
-                        .addComponent(btnRestaurarPadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDesfazer, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboBoxTipoBarra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(rotulosTotalPercentual)
+                            .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                                .addComponent(btnRestaurarPadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDesfazer, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 6, Short.MAX_VALUE))))
         );
         decoratorsPanelLayout.setVerticalGroup(
@@ -116,7 +127,9 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(rotulosProporcional)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rotulosTotal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rotulosTotalPercentual)
+                .addGap(3, 3, 3)
                 .addComponent(corBarrasGrupo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(grade)
@@ -124,7 +137,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBoxTipoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRestaurarPadrao)
                     .addComponent(btnDesfazer))
@@ -136,11 +149,13 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void rotulosTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotulosTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rotulosTotalActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox Titulo;
     private javax.swing.JButton btnDesfazer;
@@ -154,12 +169,12 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JCheckBox legenda;
     private javax.swing.JCheckBox rotulosProporcional;
     private javax.swing.JCheckBox rotulosTotal;
+    private javax.swing.JCheckBox rotulosTotalPercentual;
     // End of variables declaration//GEN-END:variables
 
     public JCheckBox getTitulo() {
         return Titulo;
     }
-
 
     public JCheckBox getCorBarrasGrupo() {
         return corBarrasGrupo;
@@ -176,7 +191,6 @@ public class MainView extends javax.swing.JFrame {
     public JCheckBox getGrade() {
         return grade;
     }
-    
 
     public JCheckBox getLegenda() {
         return legenda;
@@ -201,5 +215,9 @@ public class MainView extends javax.swing.JFrame {
     public JButton getBtnRestaurarPadrao() {
         return btnRestaurarPadrao;
     }
-    
+
+    public JCheckBox getRotulosTotalPercentual() {
+        return rotulosTotalPercentual;
+    }
+
 }
