@@ -27,16 +27,16 @@ import grafico.decorator.IGrafico;
  *
  * @author Thiago
  */
-public final class MainViewPresenter {
+public final class MainPresenter {
 
     private MainView view;
     private IGrafico grafico;
     private JPanel painelGrafico;
     private int tipoGrafico;
     private CarregaDados carregaDados;
-    GraficoDiretor diretor;
+    private GraficoDiretor diretor;
 
-    public MainViewPresenter() throws CloneNotSupportedException, IOException {
+    public MainPresenter() throws CloneNotSupportedException, IOException {
         carregaDados = new CarregaDados("src/main/resources/pessoas.csv", ",", "sexo");
         view = new MainView();
         painelGrafico = new JPanel();
