@@ -88,40 +88,18 @@ public final class MainPresenter {
                 }
             }
         });
-        view.getRotulosProporcional().addActionListener(new ActionListener() {
+        view.getRotulosPercentual().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 try {
                     addRotuloPercentual();
+                    view.getRotulosTotal().setSelected(false);
+                    view.getRotulosTotalPercentual().setSelected(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
-
-            }
-        });
-        view.getChkOrientacaoVertical().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    setOrientacao(PlotOrientation.VERTICAL);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
-                }
-
-            }
-        });
-
-        view.getChkOrientacaoHorizontal().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    setOrientacao(PlotOrientation.HORIZONTAL);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
-                }
-
             }
         });
 
@@ -131,6 +109,8 @@ public final class MainPresenter {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     addRotuloTotal();
+                    view.getRotulosPercentual().setSelected(false);
+                    view.getRotulosTotalPercentual().setSelected(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -144,6 +124,34 @@ public final class MainPresenter {
 
                 try {
                     addRotuloTotalPercential();
+                    view.getRotulosPercentual().setSelected(false);
+                    view.getRotulosTotal().setSelected(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
+                }
+
+            }
+        });
+
+        view.getChkOrientacaoVertical().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    setOrientacao(PlotOrientation.VERTICAL);
+                    view.getChkOrientacaoHorizontal().setSelected(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
+                }
+
+            }
+        });
+
+        view.getChkOrientacaoHorizontal().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    setOrientacao(PlotOrientation.HORIZONTAL);
+                    view.getChkOrientacaoVertical().setSelected(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -243,7 +251,6 @@ public final class MainPresenter {
                     Zelador.getInstance().addCheckeds(this.criaMemento());
                 }
             }
-
         }
     }
 
@@ -320,7 +327,7 @@ public final class MainPresenter {
     }
 
     private void addRotuloPercentual() throws CloneNotSupportedException {
-        grafico = new PercentualDecorator(grafico, view.getRotulosProporcional().isSelected());
+        grafico = new PercentualDecorator(grafico, view.getRotulosPercentual().isSelected());
         atualizaTela(grafico);
     }
 

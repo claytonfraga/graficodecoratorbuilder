@@ -224,7 +224,7 @@ public final class MainView extends javax.swing.JFrame {
         return legenda;
     }
 
-    public JCheckBox getRotulosProporcional() {
+    public JCheckBox getRotulosPercentual() {
         return rotulosProporcional;
     }
 
