@@ -22,6 +22,7 @@ public final class MainView extends javax.swing.JFrame {
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2.8);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
         this.setLocation(x, y);
+        this.setTitle("Gráfico - Exercício Design Patterns");
         this.pack();
     }
 
@@ -47,6 +48,9 @@ public final class MainView extends javax.swing.JFrame {
         btnRestaurarPadrao = new javax.swing.JButton();
         btnDesfazer = new javax.swing.JButton();
         rotulosTotalPercentual = new javax.swing.JCheckBox();
+        chkOrientacaoVertical = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        chkOrientacaoHorizontal = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -72,7 +76,7 @@ public final class MainView extends javax.swing.JFrame {
 
         corBarrasGrupo.setText("Cor das Barras - Por grupo");
 
-        grade.setText("Grade");
+        grade.setText("Adicionar grade");
 
         comboBoxTipoBarra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Barras Verticais", "Barras Horizontais" }));
 
@@ -84,6 +88,12 @@ public final class MainView extends javax.swing.JFrame {
 
         rotulosTotalPercentual.setText("Rótulo de Dados - Valor (%)");
 
+        chkOrientacaoVertical.setText("Vertical");
+
+        jLabel2.setText("Orientação das barras:");
+
+        chkOrientacaoHorizontal.setText("Horizontal");
+
         javax.swing.GroupLayout decoratorsPanelLayout = new javax.swing.GroupLayout(decoratorsPanel);
         decoratorsPanel.setLayout(decoratorsPanelLayout);
         decoratorsPanelLayout.setHorizontalGroup(
@@ -93,26 +103,35 @@ public final class MainView extends javax.swing.JFrame {
                 .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(decoratorsPanelLayout.createSequentialGroup()
                         .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(comboBoxTipoBarra, 0, 135, Short.MAX_VALUE))
+                            .addComponent(rotulosTotalPercentual)
+                            .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                                .addComponent(btnRestaurarPadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDesfazer, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 3, Short.MAX_VALUE))
+                    .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                        .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Titulo)
                             .addComponent(legenda)
                             .addComponent(eixos)
                             .addComponent(rotulosProporcional)
                             .addComponent(rotulosTotal)
                             .addComponent(corBarrasGrupo)
-                            .addComponent(grade))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(decoratorsPanelLayout.createSequentialGroup()
-                        .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(grade)
                             .addGroup(decoratorsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboBoxTipoBarra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(rotulosTotalPercentual)
-                            .addGroup(decoratorsPanelLayout.createSequentialGroup()
-                                .addComponent(btnRestaurarPadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDesfazer, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 6, Short.MAX_VALUE))))
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel2)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(decoratorsPanelLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkOrientacaoHorizontal)
+                    .addComponent(chkOrientacaoVertical))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         decoratorsPanelLayout.setVerticalGroup(
             decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,10 +153,16 @@ public final class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(grade)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chkOrientacaoVertical)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkOrientacaoHorizontal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBoxTipoBarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addGroup(decoratorsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRestaurarPadrao)
                     .addComponent(btnDesfazer))
@@ -160,12 +185,15 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JCheckBox Titulo;
     private javax.swing.JButton btnDesfazer;
     private javax.swing.JButton btnRestaurarPadrao;
+    private javax.swing.JCheckBox chkOrientacaoHorizontal;
+    private javax.swing.JCheckBox chkOrientacaoVertical;
     private javax.swing.JComboBox<String> comboBoxTipoBarra;
     private javax.swing.JCheckBox corBarrasGrupo;
     private javax.swing.JPanel decoratorsPanel;
     private javax.swing.JCheckBox eixos;
     private javax.swing.JCheckBox grade;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox legenda;
     private javax.swing.JCheckBox rotulosProporcional;
     private javax.swing.JCheckBox rotulosTotal;
@@ -218,6 +246,18 @@ public final class MainView extends javax.swing.JFrame {
 
     public JCheckBox getRotulosTotalPercentual() {
         return rotulosTotalPercentual;
+    }
+
+    public void setTitulo(JCheckBox Titulo) {
+        this.Titulo = Titulo;
+    }
+
+    public JCheckBox getChkOrientacaoVertical() {
+        return chkOrientacaoVertical;
+    }
+
+    public JCheckBox getChkOrientacaoHorizontal() {
+        return chkOrientacaoHorizontal;
     }
 
 }

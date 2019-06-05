@@ -22,6 +22,15 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import view.MainView;
 import grafico.decorator.IGrafico;
+import grafico.decorator.OrientacaoDecorator;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JCheckBox;
+import org.jfree.chart.plot.PlotOrientation;
 
 /**
  *
@@ -49,7 +58,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    adicionaTitulo();
+                    addTitulo();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha:" + e.getMessage());
                 }
@@ -61,7 +70,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    adicionaLegenda();
+                    addLegenda();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha:" + e.getMessage());
                 }
@@ -73,7 +82,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    adicionaTituloEixos();
+                    addTituloEixos();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha:" + e.getMessage());
                 }
@@ -85,7 +94,30 @@ public final class MainPresenter {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 try {
-                    setAnotacoesProporcional();
+                    addRotuloPercentual();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
+                }
+
+            }
+        });
+        view.getChkOrientacaoVertical().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    setOrientacao(PlotOrientation.VERTICAL);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
+                }
+
+            }
+        });
+
+        view.getChkOrientacaoHorizontal().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    setOrientacao(PlotOrientation.HORIZONTAL);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -98,7 +130,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    setAnotacoesTotal();
+                    addRotuloTotal();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -111,7 +143,7 @@ public final class MainPresenter {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 try {
-                    setAnotacoesTotalProporcional();
+                    addRotuloTotalPercential();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -124,7 +156,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    setCores();
+                    addCores();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -136,7 +168,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    setGrades();
+                    addGrades();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -148,7 +180,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    setTipoGrafico();
+                    acionaBuilder();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -159,7 +191,7 @@ public final class MainPresenter {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    btnDesfazer();
+                    desfazer();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Falha: " + e.getMessage());
                 }
@@ -177,8 +209,73 @@ public final class MainPresenter {
                 }
             }
         });
+        adicionaNotificadores();
+
         view.setVisible(true);
 
+    }
+
+    private void adicionaNotificadores() {
+
+        for (int i = 0; i < view.getDecoratorsPanel().getComponentCount(); i++) {
+            if (view.getDecoratorsPanel().getComponent(i).toString().contains("JCheckBox")) {
+                ((JCheckBox) view.getDecoratorsPanel().getComponent(i)).addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent evt) {
+                        try {
+                            checkAcionado(((JCheckBox) evt.getSource()).getText());
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Falha ao adicionar Checkbox ao Zelador: " + e.getMessage());
+                        }
+                    }
+                });
+            }
+        }
+
+    }
+
+    private void checkAcionado(String nomeCheck) {
+
+        for (int i = 0; i < view.getDecoratorsPanel().getComponentCount(); i++) {
+            if (view.getDecoratorsPanel().getComponent(i).toString().contains("JCheckBox")) {
+                if (view.getDecoratorsPanel().getComponent(i).toString().contains(nomeCheck)) {
+
+                    Zelador.getInstance().addCheckeds(this.criaMemento());
+                }
+            }
+
+        }
+    }
+
+    void restauraMemento(MementoOpcao memento
+    ) {
+        Map<String, Boolean> opcoes = memento.getOpcoes();
+
+        for (int i = 0; i < view.getDecoratorsPanel().getComponentCount(); i++) {
+            if (view.getDecoratorsPanel().getComponent(i).toString().contains("JCheckBox")) {
+
+                String rotulo = ((JCheckBox) view.getDecoratorsPanel().getComponent(i)).getText();
+                boolean selecionado = opcoes.get(rotulo);
+
+                ((JCheckBox) view.getDecoratorsPanel().getComponent(i)).setSelected(selecionado);
+            }
+        }
+    }
+
+    MementoOpcao criaMemento() {
+
+        Map<String, Boolean> opcoes = new HashMap<>();
+
+        for (int i = 0; i < view.getDecoratorsPanel().getComponentCount(); i++) {
+            Component comp = view.getDecoratorsPanel().getComponent(i);
+
+            if (comp.toString().contains("JCheckBox")) {
+                String textoRotulo = ((JCheckBox) comp).getText();
+                boolean selecionado = ((JCheckBox) comp).isSelected();
+                opcoes.put(textoRotulo, selecionado);
+            }
+        }
+        return new MementoOpcao(opcoes);
     }
 
     private void plotaGraficoInicial() throws CloneNotSupportedException, IOException {
@@ -188,57 +285,57 @@ public final class MainPresenter {
         atualizaTela(grafico);
     }
 
-    private void atualizaTela(IGrafico grafico) {
+    void atualizaTela(IGrafico grafico) {
         painelGrafico.removeAll();
         painelGrafico.add(new ChartPanel(grafico.getGrafico()));
         painelGrafico.updateUI();
         view.pack();
     }
 
-    private void adicionaTitulo() throws CloneNotSupportedException {
+    private void addTitulo() throws CloneNotSupportedException {
         grafico = new TituloDecorator(grafico, view.getTitulo().isSelected());
 
         atualizaTela(grafico);
     }
 
-    private void adicionaLegenda() throws CloneNotSupportedException {
-        boolean selecionado = view.getLegenda().isSelected();
-        if (selecionado) {
-            grafico = new LegendaDecorator(grafico, true);
-        } else {
-            grafico = new LegendaDecorator(grafico, false
-            );
-        }
+    private void addLegenda() throws CloneNotSupportedException {
+        grafico = new LegendaDecorator(grafico, view.getLegenda().isSelected());
+
         atualizaTela(grafico);
     }
 
-    private void adicionaTituloEixos() throws CloneNotSupportedException {
+    private void setOrientacao(PlotOrientation orientacao) throws CloneNotSupportedException {
+        grafico = new OrientacaoDecorator(grafico, orientacao);
+        atualizaTela(grafico);
+    }
+
+    private void addTituloEixos() throws CloneNotSupportedException {
         grafico = new EixosDecorator(grafico, view.getEixos().isSelected());
         atualizaTela(grafico);
     }
 
-    private void setGrades() throws CloneNotSupportedException {
+    private void addGrades() throws CloneNotSupportedException {
         grafico = new GridlinesDecorator(grafico, view.getGrade().isSelected());
         atualizaTela(grafico);
     }
 
-    private void setAnotacoesProporcional() throws CloneNotSupportedException {
+    private void addRotuloPercentual() throws CloneNotSupportedException {
         grafico = new PercentualDecorator(grafico, view.getRotulosProporcional().isSelected());
         atualizaTela(grafico);
     }
 
-    private void setAnotacoesTotalProporcional() throws CloneNotSupportedException {
+    private void addRotuloTotalPercential() throws CloneNotSupportedException {
         grafico = new AnotacaoTotalProporcionalDecorator(grafico, view.getRotulosTotalPercentual().isSelected());
         atualizaTela(grafico);
 
     }
 
-    private void setAnotacoesTotal() throws CloneNotSupportedException {
+    private void addRotuloTotal() throws CloneNotSupportedException {
         grafico = new AnotacaoTotalDecorator(grafico, view.getRotulosTotal().isSelected());
         atualizaTela(grafico);
     }
 
-    private void setCores() throws CloneNotSupportedException {
+    private void addCores() throws CloneNotSupportedException {
         if (!view.getCorBarrasGrupo().isSelected()) {
             ArrayList<Color> cores = new ArrayList();
             cores.add(Color.decode(GraficoBarra.CORDEFAULT1));
@@ -251,7 +348,7 @@ public final class MainPresenter {
 
     }
 
-    private void setTipoGrafico() throws CloneNotSupportedException {
+    private void acionaBuilder() throws CloneNotSupportedException {
         int tipo = view.getComboBoxTipoBarra().getSelectedIndex();
         if (tipo != tipoGrafico) {
             tipoGrafico = tipo;
@@ -265,12 +362,30 @@ public final class MainPresenter {
         }
     }
 
-    private void btnDesfazer() {
+    private void desfazer() {
         grafico = grafico.remover();
+        try {
+            restauraMemento(Zelador.getInstance().getCheckeds());
+        } catch (Exception e) {
+        }
+
         atualizaTela(grafico);
     }
 
     private void btnRestaurarPadrao() throws CloneNotSupportedException, IOException {
         plotaGraficoInicial();
     }
+
+    MainView getView() {
+        return view;
+    }
+
+    void setGrafico(IGrafico grafico) {
+        this.grafico = grafico;
+    }
+
+    IGrafico getGrafico() {
+        return grafico;
+    }
+
 }

@@ -24,6 +24,9 @@ public class GraficoBarra implements IGrafico {
     public GraficoBarra(DefaultCategoryDataset dataset) {
         grafico = ChartFactory.createBarChart("", "", "", dataset, PlotOrientation.VERTICAL, true, true, true);
         grafico.getLegend().setVisible(false);
+        grafico.getCategoryPlot().setDomainGridlinesVisible(false);
+        grafico.getCategoryPlot().setRangeGridlinesVisible(false);
+
         ArrayList<Color> cores = new ArrayList();
         cores.add(Color.decode(CORDEFAULT1));
         cores.add(Color.decode(CORDEFAULT2));
